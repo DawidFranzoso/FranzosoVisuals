@@ -6,8 +6,8 @@ namespace FranzosoVisuals
 {
     public interface ITransformable<T>
     {
-        public abstract T get();
-        public abstract void setValue(T x);
+        //public abstract T get();
+        //public abstract void setValue(T x);
         public abstract T addReturn(T x);
         public abstract void addValue(T x);
         public abstract T scaleReturn(float x);
@@ -20,23 +20,29 @@ namespace FranzosoVisuals
         public abstract void setValue(T x);
     }
 
-    /*public interface ITransformable<T>
-    {
-        public T add(IValue<T> x);
-        public T scale(float x);
-    }*/
-
-    public class Rf<T> : IValue<T>, ITransformable<T>
+    /*public struct Tr<T> : ITransformable<T>
     {
         public T value;
-        public T get() => value;
-        public void setValue(T x) { value = x; }
 
-        public T addReturn(T x) => (dynamic)x + value;
+        public T addReturn(T x) => (dynamic)value + x;
         public void addValue(T x) { value = addReturn(x); }
 
         public T scaleReturn(float x) => (dynamic)value * x;
         public void scaleValue(float x) { value = scaleReturn(x); }
+
+        public void setValue(T x) { value = x; }
+
+        public Tr(T x) { value = x; }
+
+        public static implicit operator T(Tr<T> x) => x.value;
+        public static implicit operator Tr<T>(T x) => new Tr<T>(x);
+    }*/
+
+    public class Rf<T> : IValue<T>
+    {
+        public T value;
+        public T get() => value;
+        public void setValue(T x) { value = x; }
 
         public Rf(T v) { value = v; }
         public static implicit operator Rf<T>(T v) => new Rf<T>(v);

@@ -76,6 +76,9 @@ namespace FranzosoVisuals
 
             Fwindow.Add(new LatexSprite(new Rf<string>(@"\pi\(\int_{0}^{1} e^{\pi*i*x}\,dx\)"),new Rf<Vec2f>((1100,700))));
 
+            Fwindow.Add(() => Fwindow.Add(new TransformationProperties<float>(radius, new Rf<float>(2f), new Rf<float>(1000))));
+            Fwindow.Add(() => Fwindow.Add(new TransformationProperties<float>(radius, new Rf<float>(0.5f), new Rf<float>(1000))));
+
             //Fwindow.Add(new TransformationProperties<float>(radius, new Rf<float>(3), new Rf<float>(1000), reset_a: true, repeat_a: true)); // napraw to
 
             while (Fwindow.window.IsOpen)

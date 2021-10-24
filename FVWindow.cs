@@ -75,7 +75,9 @@ namespace FranzosoVisuals
 
         public void Add(Primitive p) { primitives.Add(p); }
         public void Add<T>(Transformation<T> t) where T : ITransformable<T> { transformationHandler.addTransform(t); }
-        public void Add<T>(TransformationProperties<T> t) where T : ITransformable<T> { transformationHandler.addTransform(t, time); }
+        public void Add<T>(TransformationProperties<T> t) { transformationHandler.addTransform(t, time); }
+        
+        //public void Add<T>(TransformationProperties<T> t) { transformationHandler.addTransform(t, time); }
         public void Add(Action a) { instructionQueue.Add(a); }
     }
 }

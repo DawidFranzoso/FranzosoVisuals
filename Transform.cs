@@ -16,7 +16,7 @@ namespace FranzosoVisuals
         public bool transform(); // returns false when is supposed to be deleted
     }
 
-    public struct TransformationProperties<T> where T : ITransformable<T>
+    public struct TransformationProperties<T>
     {
         public bool reset;
         public bool repeat;
@@ -36,7 +36,51 @@ namespace FranzosoVisuals
         }
     }
 
-    public class Transformation<T> : ITransformation where T : ITransformable<T>
+    public class TransformationObj<T> : ITransformation where T : ITransformable<T>
+    {
+        bool reset;
+        bool repeat;
+        Func<float, float> curve;
+
+        IValue<T> value;
+        IValue<float> time;
+        IValue<float> duration_milliseconds;
+
+        float start_time;
+        T start_value;
+        IValue<T> end_value;
+
+        public TransformationObj(TransformationProperties<T> p, IValue<float> time_a)
+        {
+            reset = p.reset;
+            repeat = p.repeat;
+            curve = p.curve;
+            value = p.value;
+            end_value = p.end_value;
+            duration_milliseconds = p.duration_milliseconds;
+            time = time_a;
+
+            start_time = time.get();
+            start_value = value.get();
+        }
+
+        public bool transform()
+        {
+            float t = time.get() - start_time;
+            float relative_t = t / duration_milliseconds.get();
+            if (relative_t > 1)
+            {
+                value.setValue(reset?start_value:end_value.get());
+                if (repeat) start_time = time.get();
+                return repeat;
+            }
+            T delta = end_value.get().addReturn(start_value.scaleReturn(-1)); // end_value - start_value
+            value.setValue(start_value.addReturn(delta.scaleReturn(curve(relative_t)))); // start_value + f(relative_t) * delta
+            return true;
+        }
+    }
+
+    public class Transformation<T> : ITransformation
     {
         bool reset;
         bool repeat;
@@ -70,12 +114,13 @@ namespace FranzosoVisuals
             float relative_t = t / duration_milliseconds.get();
             if (relative_t > 1)
             {
-                value.setValue(reset?start_value:end_value.get());
+                value.setValue(reset ? start_value : end_value.get());
                 if (repeat) start_time = time.get();
                 return repeat;
             }
-            T delta = end_value.get().addReturn(start_value.scaleReturn(-1)); // end_value - start_value
-            value.setValue(start_value.addReturn(delta.scaleReturn(curve(relative_t)))); // start_value + f(relative_t) * delta
+
+            T delta = (dynamic) end_value.get() - start_value;
+            value.setValue(start_value + (dynamic)delta * curve(relative_t)); // start_value + f(relative_t) * delta
             return true;
         }
     }
@@ -100,11 +145,10 @@ namespace FranzosoVisuals
             transformations = transformations.Except(complete).ToList();
         }
 
-        public void addTransform<T>(Transformation<T> t) where T : ITransformable<T> { transformations.Add(t); }
-        public void addTransform<T>(TransformationProperties<T> p, IValue<float> time_a) where T : ITransformable<T>
-        {
+        public void addTransform<T>(Transformation<T> t) { transformations.Add(t); }
+        public void addTransform<T>(TransformationObj<T> t) where T : ITransformable<T> { transformations.Add(t); }
 
-            addTransform<T>(new Transformation<T>(p, time));
-        }
+        public void addTransform<T>(TransformationProperties<T> p, IValue<float> time_a)
+        { addTransform(new Transformation<T>(p, time)); }
     }
 }
