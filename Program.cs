@@ -78,8 +78,7 @@ namespace FranzosoVisuals
 
             Fwindow.Add(() => Fwindow.Add(new TransformationProperties<float>(radius, new Rf<float>(2f), new Rf<float>(1000))));
             Fwindow.Add(() => Fwindow.Add(new TransformationProperties<float>(radius, new Rf<float>(0.5f), new Rf<float>(1000))));
-
-            //Fwindow.Add(new TransformationProperties<float>(radius, new Rf<float>(3), new Rf<float>(1000), reset_a: true, repeat_a: true)); // napraw to
+            Fwindow.Add(() => Fwindow.Add(new TransformationProperties<float>(radius, new Rf<float>(1f), new Rf<float>(1000))));
 
             while (Fwindow.window.IsOpen)
                 Fwindow.loop();
