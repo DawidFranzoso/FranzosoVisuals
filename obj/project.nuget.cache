@@ -1,17 +1,17 @@
 {
   "version": 2,
-  "dgSpecHash": "H3JMslLokRFfCWzOsrBw4NX46QlmsGumAEEkzM9dUwNiFn+akg5NOz8v9+hO5Xcwh2McUAmpzpeCkHjxZ6VSsw==",
+  "dgSpecHash": "Uoew0I7DWGekh/E1UZgx0uYciUKpTjnMqUCUtcdak3ulUzQIA5kzQaLCYsYGicxU1j3bt9wLN+Jdi6uEK5FwOg==",
   "success": true,
-  "projectFilePath": "D:\\Projekty\\FranzosoVisuals\\FranzosoVisuals.csproj",
+  "projectFilePath": "C:\\Users\\kacpe\\FranzosoVisuals\\FranzosoVisuals.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\Dawid\\.nuget\\packages\\csfml\\2.5.0\\csfml.2.5.0.nupkg.sha512",
-    "C:\\Users\\Dawid\\.nuget\\packages\\mathnet.numerics\\4.15.0\\mathnet.numerics.4.15.0.nupkg.sha512",
-    "C:\\Users\\Dawid\\.nuget\\packages\\sfml.audio\\2.5.0\\sfml.audio.2.5.0.nupkg.sha512",
-    "C:\\Users\\Dawid\\.nuget\\packages\\sfml.graphics\\2.5.0\\sfml.graphics.2.5.0.nupkg.sha512",
-    "C:\\Users\\Dawid\\.nuget\\packages\\sfml.net\\2.5.0\\sfml.net.2.5.0.nupkg.sha512",
-    "C:\\Users\\Dawid\\.nuget\\packages\\sfml.system\\2.5.0\\sfml.system.2.5.0.nupkg.sha512",
-    "C:\\Users\\Dawid\\.nuget\\packages\\sfml.window\\2.5.0\\sfml.window.2.5.0.nupkg.sha512",
-    "C:\\Users\\Dawid\\.nuget\\packages\\wpfmath\\0.11.0\\wpfmath.0.11.0.nupkg.sha512"
+    "C:\\Users\\kacpe\\.nuget\\packages\\csfml\\2.5.0\\csfml.2.5.0.nupkg.sha512",
+    "C:\\Users\\kacpe\\.nuget\\packages\\mathnet.numerics\\4.15.0\\mathnet.numerics.4.15.0.nupkg.sha512",
+    "C:\\Users\\kacpe\\.nuget\\packages\\sfml.audio\\2.5.0\\sfml.audio.2.5.0.nupkg.sha512",
+    "C:\\Users\\kacpe\\.nuget\\packages\\sfml.graphics\\2.5.0\\sfml.graphics.2.5.0.nupkg.sha512",
+    "C:\\Users\\kacpe\\.nuget\\packages\\sfml.net\\2.5.0\\sfml.net.2.5.0.nupkg.sha512",
+    "C:\\Users\\kacpe\\.nuget\\packages\\sfml.system\\2.5.0\\sfml.system.2.5.0.nupkg.sha512",
+    "C:\\Users\\kacpe\\.nuget\\packages\\sfml.window\\2.5.0\\sfml.window.2.5.0.nupkg.sha512",
+    "C:\\Users\\kacpe\\.nuget\\packages\\wpfmath\\0.11.0\\wpfmath.0.11.0.nupkg.sha512"
   ],
   "logs": []
 }
