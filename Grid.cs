@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using SFML.Graphics;
+using SFML.System;
 
 namespace FranzosoVisuals
 {
@@ -87,6 +88,10 @@ namespace FranzosoVisuals
         public List<(IValue<Func<decimal, decimal>>, IValue<decimal>, IValue<(decimal, decimal)>, IValue<Color>)> function_graphs = new List<(IValue<Func<decimal, decimal>>, IValue<decimal>, IValue<(decimal, decimal)>, IValue<Color>)>();
         // function, interval, mapping_range, color
 
+        public List<Primitive> primitives = new List<Primitive>();
+
+        public void Graph(Primitive p) { primitives.Add(p); }
+
         public void Graph(IValue<Func<decimal, decimal>> f, IValue<decimal> interval = null, IValue<(decimal, decimal)> range = null, IValue<Color> color = null)
         {
             interval = MathExt.defIfNull(interval, new Rf<decimal>(0.02M));
@@ -100,11 +105,11 @@ namespace FranzosoVisuals
 
         }*/
 
-        public override void draw(FVWindow target_window)
+        public override void draw(FVWindow target_window, Vec2f offset, Matrix2X2F pos_scale)
         {
             lines = generateLines();
             foreach (Line l in lines)
-                l.draw(target_window);
+                l.draw(target_window, offset, span.returnTransformed(pos_scale));
 
             foreach((IValue<Func<decimal, decimal>>, IValue<decimal>, IValue<(decimal,decimal)>, IValue<Color>) args in function_graphs)
             {
@@ -123,14 +128,19 @@ namespace FranzosoVisuals
                         graph.Append(new Vertex(x * spanX.get() + y * spanY.get() + anchor.get(),color));
                     last_y = y;
                 }
-                target_window.window.Draw(convSFML_V(graph,target_window));
+                target_window.window.Draw(convSFML_V(graph,target_window,offset,pos_scale));
+            } // TODO: Make an extra class for graphs
+
+            foreach (Primitive p in primitives)
+            {
+                // if there is any mistakes on chaining transformations, switch a and b. Couldnt wrap my head around it
+                p.draw(target_window, offset + anchor.get(), pos_scale.returnTransformed(span));
             }
 
             if (showVectors.get())
             {
-                //arrowVecX.
-                arrowVecX.draw(target_window);
-                arrowVecY.draw(target_window);
+                arrowVecX.draw(target_window,offset, pos_scale); // dramat kurwa, jutro musze naprawić to wszystko
+                arrowVecY.draw(target_window,offset, pos_scale.returnTransformed(span));
             }
         }
     }

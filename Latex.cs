@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using WpfMath;
 using SFML.Graphics;
+using SFML.System;
 
 namespace FranzosoVisuals
 {
@@ -29,9 +30,9 @@ namespace FranzosoVisuals
             return new FSprite(formula.RenderToPng(size.get(), 0.0, 0.0, "Arial"), position);
         }
 
-        public override void draw(FVWindow target_window)
+        public override void draw(FVWindow target_window, Vec2f offset, Matrix2X2F pos_scale)
         {
-            createSprite().draw(target_window);
+            createSprite().draw(target_window,offset,pos_scale);
         }
     }
 }

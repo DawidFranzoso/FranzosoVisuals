@@ -4,6 +4,7 @@ using System.Text;
 using SFML.Graphics;
 using SFML.Window;
 using System.Threading;
+using SFML.System;
 
 namespace FranzosoVisuals
 {
@@ -41,7 +42,7 @@ namespace FranzosoVisuals
         {
             window.Clear();
             foreach (Primitive p in primitives)
-                p.draw(this);
+                p.draw(this,new Vector2f(0,0), Matrix2X2F.unit);
             window.Display();
         }
 

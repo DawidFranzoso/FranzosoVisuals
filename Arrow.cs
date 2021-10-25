@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using SFML.Graphics;
+using SFML.System;
 
 namespace FranzosoVisuals
 {
@@ -26,9 +27,9 @@ namespace FranzosoVisuals
             color = MathExt.defIfNull(color_a,new Rf<Color>(Color.White));
         }
 
-        public override void draw(FVWindow target_window)
+        public override void draw(FVWindow target_window, Vec2f offset, Matrix2X2F pos_scale)
         {
-            target_window.window.Draw(convSFML_V(getShape(), target_window));
+            target_window.window.Draw(convSFML_V(getShape(), target_window, offset, pos_scale));
         }
 
         VertexArray getShape()

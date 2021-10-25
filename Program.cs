@@ -13,8 +13,8 @@ namespace FranzosoVisuals
             FuncA<RenderWindow, Vec2f> screen_center = new FuncA<RenderWindow, Vec2f>(w => Screen.getCenter(w), Fwindow.window);
             FuncA<RenderWindow, Vec2f> mouse_position = new FuncA<RenderWindow, Vec2f>(w => new Vec2f(Mouse.GetPosition(w).X, w.Size.Y - Mouse.GetPosition(w).Y), Fwindow.window);
 
-            FuncA<IValue<Vec2f>, Vec2f> v1 = new FuncA<IValue<Vec2f>, Vec2f>(t => ((float)Math.Cos(t.get().X / 1600 * 2 * Math.PI) * 100, (float)-Math.Sin(t.get().X / 1600 * 2 * Math.PI) * 100), mouse_position);
-            FuncA<IValue<Vec2f>, Vec2f> v2 = new FuncA<IValue<Vec2f>, Vec2f>(t => ((float)-Math.Sin(-t.get().Y / 900 * 2 * Math.PI) * 100, (float)Math.Cos(-t.get().Y / 900 * 2 * Math.PI) * 100), mouse_position);
+            FuncA<IValue<Vec2f>, Vec2f> v1 = new FuncA<IValue<Vec2f>, Vec2f>(t => ((float)Math.Cos(t.get().X / Fwindow.window.Size.X * 2 * Math.PI) * 100, (float)-Math.Sin(t.get().X / Fwindow.window.Size.X * 2 * Math.PI) * 100), mouse_position);
+            FuncA<IValue<Vec2f>, Vec2f> v2 = new FuncA<IValue<Vec2f>, Vec2f>(t => ((float)-Math.Sin(-t.get().Y / Fwindow.window.Size.Y * 2 * Math.PI) * 100, (float)Math.Cos(-t.get().Y / Fwindow.window.Size.Y * 2 * Math.PI) * 100), mouse_position);
 
             Rf<Vec2f> v3 = new Rf<Vec2f>((100f, 0f));
             Rf<Vec2f> v4 = v3.get();
@@ -45,36 +45,33 @@ namespace FranzosoVisuals
                 Fwindow.loop();
         }
 
-        static void Main(string[] args)
+        static void test_program2()
         {
-            test_program();
-
-            FVWindow Fwindow = new FVWindow(true);  
+            FVWindow Fwindow = new FVWindow(true);
 
             FuncA<RenderWindow, Vec2f> screen_center = new FuncA<RenderWindow, Vec2f>(w => Screen.getCenter(w), Fwindow.window);
-            Matrix2X2F base_system = new Matrix2X2F(new Rf<Vec2f>((250,0)), new Rf<Vec2f>((0,250)));
+            Matrix2X2F base_system = new Matrix2X2F(new Rf<Vec2f>((250, 0)), new Rf<Vec2f>((0, 250)));
 
             Rf<float> radius = new Rf<float>(1);
-            FuncA<IValue<float>, float> radius_scaled = new FuncA<IValue<float>, float>(x => x.get() * 250, radius);
             FuncA<IValue<float>, float> alpha = new FuncA<IValue<float>, float>(t => t.get() / 1000 * 2 * (float)Math.PI / 5, Fwindow.time);
             FuncA<IValue<float>, Func<decimal, decimal>> upper_circle = new FuncA<IValue<float>, Func<decimal, decimal>>(r => (x => Math.Abs(x) > (decimal)r.get() ? 0 : (decimal)Math.Sqrt(((double)((decimal)(r.get() * r.get()) - (x * x))))), radius);
             FuncA<IValue<Func<decimal, decimal>>, Func<decimal, decimal>> lower_circle = new FuncA<IValue<Func<decimal, decimal>>, Func<decimal, decimal>>(f => (x => -f.get()(x)), upper_circle);
 
-            Grid grid = new Grid(base_system, screen_center);
-            grid.Graph(lower_circle,new Rf<decimal>(0.01M),new Rf<(decimal,decimal)>((-3M, 3M)));
-            grid.Graph(upper_circle,new Rf<decimal>(0.01M),new Rf<(decimal,decimal)>((-3M, 3M)));
+            Grid grid = new Grid(base_system, screen_center, new Rf<bool>(true));
+            grid.Graph(lower_circle, new Rf<decimal>(0.01M), new Rf<(decimal, decimal)>((-3M, 3M)));
+            grid.Graph(upper_circle, new Rf<decimal>(0.01M), new Rf<(decimal, decimal)>((-3M, 3M)));
             Fwindow.Add(grid);
 
-            Line_fi hypo = new Line_fi(screen_center, alpha, radius_scaled, new Rf<Color>(Color.Red));
+            Line_fi hypo = new Line_fi(new Rf<Vec2f>((1, 1)), alpha, radius, color_a: new Rf<Color>(Color.Red));
 
-            Fwindow.Add(hypo);
+            grid.Graph(hypo);
 
-            Fwindow.Add(new LatexSprite(new FuncA<(IValue<float>,(IValue<Vec2f>, IValue<Vec2f>)), string>(
-                v => $"sin({v.Item1.get():f2})={(v.Item2.Item2.get() - v.Item2.Item1.get()).Y/250:f2}\\\\" +
-                $"cos({v.Item1.get():f2})={(v.Item2.Item2.get()-v.Item2.Item1.get()).X/250:f2}",
-                (alpha,hypo.getPoints())), new Rf<Vec2f>((50, 50))));
+            Fwindow.Add(new LatexSprite(new FuncA<(IValue<float>, (IValue<Vec2f>, IValue<Vec2f>)), string>(
+                v => $"sin({v.Item1.get():f2})={(v.Item2.Item2.get() - v.Item2.Item1.get()).Y / 250:f2}\\\\" +
+                $"cos({v.Item1.get():f2})={(v.Item2.Item2.get() - v.Item2.Item1.get()).X / 250:f2}",
+                (alpha, hypo.getPoints())), new Rf<Vec2f>((50, 50))));
 
-            Fwindow.Add(new LatexSprite(new Rf<string>(@"\pi\(\int_{0}^{1} e^{\pi*i*x}\,dx\)"),new Rf<Vec2f>((1100,700))));
+            Fwindow.Add(new LatexSprite(new Rf<string>(@"\pi\(\int_{0}^{1} e^{\pi*i*x}\,dx\)"), new Rf<Vec2f>((1500, 900))));
 
             Fwindow.Add(() => Fwindow.Add(new TransformationProperties<float>(radius, new Rf<float>(2f), new Rf<float>(1000))));
             Fwindow.Add(() => Fwindow.Add(new TransformationProperties<float>(radius, new Rf<float>(0.5f), new Rf<float>(1000))));
@@ -82,6 +79,42 @@ namespace FranzosoVisuals
 
             while (Fwindow.window.IsOpen)
                 Fwindow.loop();
+        }
+
+        static void test_program3()
+        {
+            FVWindow Fwindow = new FVWindow(true);
+
+            FuncA<RenderWindow, Vec2f> screen_center = new FuncA<RenderWindow, Vec2f>(w => Screen.getCenter(w), Fwindow.window);
+            FuncA<RenderWindow, Vec2f> mouse_position = new FuncA<RenderWindow, Vec2f>(w => new Vec2f(Mouse.GetPosition(w).X, w.Size.Y - Mouse.GetPosition(w).Y), Fwindow.window);
+
+            FuncA<IValue<Vec2f>, Vec2f> v1 = new FuncA<IValue<Vec2f>, Vec2f>(t => ((float)Math.Cos(t.get().X / Fwindow.window.Size.X * 2 * Math.PI) * 100, (float)-Math.Sin(t.get().X / Fwindow.window.Size.X * 2 * Math.PI) * 100), mouse_position);
+            FuncA<IValue<Vec2f>, Vec2f> v2 = new FuncA<IValue<Vec2f>, Vec2f>(t => ((float)-Math.Sin(-t.get().Y / Fwindow.window.Size.Y * 2 * Math.PI) * 100, (float)Math.Cos(-t.get().Y / Fwindow.window.Size.Y * 2 * Math.PI) * 100), mouse_position);
+
+            Matrix2X2F base_system = new Matrix2X2F(v1,v2);
+
+            Rf<float> radius = new Rf<float>(1);
+            FuncA<IValue<float>, float> alpha = new FuncA<IValue<float>, float>(t => t.get() / 1000 * 2 * (float)Math.PI / 5, Fwindow.time);
+            FuncA<IValue<float>, Func<decimal, decimal>> upper_circle = new FuncA<IValue<float>, Func<decimal, decimal>>(r => (x => Math.Abs(x) > (decimal)r.get() ? 0 : (decimal)Math.Sqrt(((double)((decimal)(r.get() * r.get()) - (x * x))))), radius);
+            FuncA<IValue<Func<decimal, decimal>>, Func<decimal, decimal>> lower_circle = new FuncA<IValue<Func<decimal, decimal>>, Func<decimal, decimal>>(f => (x => -f.get()(x)), upper_circle);
+
+            Grid base_grid = new Grid(base_system, new Rf<Vec2f>((200, 200)), new Rf<bool>(true));
+            Grid inner_grid = new Grid(new Matrix2X2F(1,0,0,1), new Rf<Vec2f>((0,0)), new Rf<bool>(false));
+            inner_grid.Graph(lower_circle, new Rf<decimal>(0.01M), new Rf<(decimal, decimal)>((-3M, 3M)));
+            inner_grid.Graph(upper_circle, new Rf<decimal>(0.01M), new Rf<(decimal, decimal)>((-3M, 3M)));
+            base_grid.Graph(inner_grid);
+            Fwindow.Add(base_grid);
+
+
+            while (Fwindow.window.IsOpen)
+                Fwindow.loop();
+        }
+
+
+        static void Main(string[] args)
+        {
+            test_program3();
+
         }
     }
 }

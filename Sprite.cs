@@ -21,10 +21,10 @@ namespace FranzosoVisuals
             sprite.Origin = new Vector2f(0, sprite.TextureRect.Height);
         }
 
-        public override void draw(FVWindow target_window)
+        public override void draw(FVWindow target_window, Vec2f offset, Matrix2X2F pos_scale)
         {
             sprite.Position = position.get();
-            target_window.window.Draw(convSFML_SPR(sprite, target_window));
+            target_window.window.Draw(convSFML_SPR(sprite, target_window, offset, pos_scale));
         }
     }
 }

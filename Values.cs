@@ -68,7 +68,7 @@ namespace FranzosoVisuals
         public Matrix2X2F(Vec2f x, Vec2f y) : this((x, y)) { }
         public Matrix2X2F(IValue<Vec2f> x, IValue<Vec2f> y) : this((x, y)) { }
 
-        public Matrix2X2F(float x1, float x2, float y1, float y2) : this((x1,x2), (y1, y2)) { }
+        public Matrix2X2F(float x1, float x2, float y1, float y2) : this((x1, x2), (y1, y2)) { }
 
         public Matrix2X2F get() => this;
         public void setValue(Matrix2X2F x) { span.Item1.setValue(x.span.Item1.get()); span.Item2.setValue(x.span.Item2.get()); }
@@ -78,5 +78,28 @@ namespace FranzosoVisuals
 
         public Matrix2X2F scaleReturn(float x) => new Matrix2X2F(span.Item1.get() * x, span.Item2.get() * x);
         public void scaleValue(float x) { span.Item1.setValue(scaleReturn(x).span.Item1.get()); span.Item2.setValue(scaleReturn(x).span.Item2.get()); }
+
+        public Matrix2X2F returnTransformed(Matrix2X2F a)
+        {
+            Vec2f a1, a2, b1, b2;
+            Vec2f n1, n2;
+            (a1, a2, b1, b2) = (a.span.Item1.get(), a.span.Item2.get(), this.span.Item1.get(), this.span.Item2.get());
+            n1 = new Vec2f(b1.X * a1.X + b2.X * a1.Y, b1.Y * a1.X + b2.Y * a1.Y);
+            n2 = new Vec2f(b1.X * a2.X + b2.X * a2.Y, b1.Y * a2.X + b2.Y * a2.Y);
+
+            return new Matrix2X2F(n1,n2);
+        }
+
+        public Vec2f returnTransformed(IValue<Vec2f> v)
+        {
+            Matrix2X2F a = new Matrix2X2F(v.get(), new Vec2f(0, 0));
+            returnTransformed(a);
+
+            return a.span.Item1.get();
+        }
+
+        public Vec2f returnTransformed(Vec2f v) => returnTransformed(new Rf<Vec2f>(v)).get();
+
+        public static readonly Matrix2X2F unit = new Matrix2X2F((1,0),(0,1));
     }
 }
