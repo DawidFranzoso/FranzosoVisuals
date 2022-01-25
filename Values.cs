@@ -79,7 +79,7 @@ namespace FranzosoVisuals
         public Matrix2X2F scaleReturn(float x) => new Matrix2X2F(span.Item1.get() * x, span.Item2.get() * x);
         public void scaleValue(float x) { span.Item1.setValue(scaleReturn(x).span.Item1.get()); span.Item2.setValue(scaleReturn(x).span.Item2.get()); }
 
-        public Matrix2X2F returnTransformed(Matrix2X2F a)
+        public Matrix2X2F returnTransformed(Matrix2X2F a) // returns B * A
         {
             Vec2f a1, a2, b1, b2;
             Vec2f n1, n2;

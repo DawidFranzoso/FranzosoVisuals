@@ -20,24 +20,24 @@ namespace FranzosoVisuals
 
         protected float getLength() => MathExt.magnitude2(getPoints().Item2.get() - getPoints().Item1.get());
         protected float getLengthTransformed(Matrix2X2F pos_scalar)
-            => MathExt.magnitude2(getPointsPositionsTransformed(pos_scalar).Item2.get() - getPointsPositionsTransformed(pos_scalar).Item1.get());
+            => MathExt.magnitude2(getPointsPositionsTransformed((0,0), pos_scalar).Item2.get() - getPointsPositionsTransformed((0, 0), pos_scalar).Item1.get());
 
         protected float getFiRad(Matrix2X2F pos_scalar)
         {
-            float deltaX = getPointsPositionsTransformed(pos_scalar).Item2.X - getPointsPositionsTransformed(pos_scalar).Item1.X;
-            float deltaY = getPointsPositionsTransformed(pos_scalar).Item2.Y - getPointsPositionsTransformed(pos_scalar).Item1.Y;
+            float deltaX = getPointsPositionsTransformed((0,0),pos_scalar).Item2.X - getPointsPositionsTransformed((0, 0), pos_scalar).Item1.X;
+            float deltaY = getPointsPositionsTransformed((0, 0), pos_scalar).Item2.Y - getPointsPositionsTransformed((0, 0), pos_scalar).Item1.Y;
 
             return (float)Math.Atan2(deltaY, deltaX);
         }
 
         abstract public (IValue<Vec2f>, IValue<Vec2f>) getPoints();
 
-        protected (Vec2f, Vec2f) getPointsPositionsTransformed(Matrix2X2F pos_scalar)
-            => (pos_scalar.returnTransformed(getPoints().Item1.get()), pos_scalar.returnTransformed(getPoints().Item2.get()));
+        protected (Vec2f, Vec2f) getPointsPositionsTransformed(Vec2f offset, Matrix2X2F pos_scalar)
+            => (pos_scalar.returnTransformed(getPoints().Item1.get() + offset), pos_scalar.returnTransformed(getPoints().Item2.get()));
 
         float getFiDeg(Matrix2X2F pos_scalar) { return MathExt.RadToDeg(getFiRad(pos_scalar)); }
 
-        RectangleShape correspondingRect(Matrix2X2F pos_scalar)
+        RectangleShape correspondingRect(Vec2f offset, Matrix2X2F pos_scalar)
         {
             RectangleShape r = new RectangleShape();
 
@@ -45,7 +45,7 @@ namespace FranzosoVisuals
 
             r.Origin = new Vec2f(isInfinite.get() == true || origin_centered.get()==true? r.Size.X / 2:0, r.Size.Y / 2);
 
-            r.Position = getPointsPositionsTransformed(pos_scalar).Item1;
+            r.Position = getPointsPositionsTransformed(offset ,pos_scalar).Item1;
             r.Rotation = getFiDeg(pos_scalar);
             r.FillColor = color.get();
 
@@ -63,7 +63,7 @@ namespace FranzosoVisuals
 
         public override void draw(FVWindow target_window, Vec2f offset, Matrix2X2F pos_scalar)
         {
-            target_window.window.Draw(convSFML_S(correspondingRect(pos_scalar),target_window, offset, Matrix2X2F.unit));
+            target_window.window.Draw(convSFML_S(correspondingRect(offset, pos_scalar),target_window));
         }
     }
 }

@@ -109,7 +109,7 @@ namespace FranzosoVisuals
         {
             lines = generateLines();
             foreach (Line l in lines)
-                l.draw(target_window, offset, span.returnTransformed(pos_scale));
+                l.draw(target_window, offset, pos_scale.returnTransformed(span));
 
             foreach((IValue<Func<decimal, decimal>>, IValue<decimal>, IValue<(decimal,decimal)>, IValue<Color>) args in function_graphs)
             {
@@ -128,19 +128,19 @@ namespace FranzosoVisuals
                         graph.Append(new Vertex(x * spanX.get() + y * spanY.get() + anchor.get(),color));
                     last_y = y;
                 }
-                target_window.window.Draw(convSFML_V(graph,target_window,offset,pos_scale));
+                target_window.window.Draw(convSFML_V(getTransformedVertexArray(graph, offset, pos_scale),target_window));
             } // TODO: Make an extra class for graphs
 
             foreach (Primitive p in primitives)
             {
                 // if there is any mistakes on chaining transformations, switch a and b. Couldnt wrap my head around it
-                p.draw(target_window, offset + anchor.get(), pos_scale.returnTransformed(span));
+                p.draw(target_window, offset + anchor.get(), span.returnTransformed(pos_scale));
             }
 
             if (showVectors.get())
             {
-                arrowVecX.draw(target_window,offset, pos_scale); // dramat kurwa, jutro musze naprawić to wszystko
-                arrowVecY.draw(target_window,offset, pos_scale.returnTransformed(span));
+                arrowVecX.draw(target_window,offset, span.returnTransformed(pos_scale));
+                arrowVecY.draw(target_window,offset, span.returnTransformed(pos_scale));
             }
         }
     }

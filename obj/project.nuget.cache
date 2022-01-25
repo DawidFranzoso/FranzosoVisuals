@@ -1,17 +1,21 @@
 {
   "version": 2,
-  "dgSpecHash": "Uoew0I7DWGekh/E1UZgx0uYciUKpTjnMqUCUtcdak3ulUzQIA5kzQaLCYsYGicxU1j3bt9wLN+Jdi6uEK5FwOg==",
+  "dgSpecHash": "wqR0fAbi7+b6Pz7e9QagSAVbxrE68n6YVRpxdS/6r2buabgzQsWMU/vMZarOLpAMxmjGeaosqFh9ombIPfNV5Q==",
   "success": true,
-  "projectFilePath": "C:\\Users\\kacpe\\FranzosoVisuals\\FranzosoVisuals.csproj",
+  "projectFilePath": "C:\\Users\\daved\\FranzosoVisuals\\FranzosoVisuals.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\kacpe\\.nuget\\packages\\csfml\\2.5.0\\csfml.2.5.0.nupkg.sha512",
-    "C:\\Users\\kacpe\\.nuget\\packages\\mathnet.numerics\\4.15.0\\mathnet.numerics.4.15.0.nupkg.sha512",
-    "C:\\Users\\kacpe\\.nuget\\packages\\sfml.audio\\2.5.0\\sfml.audio.2.5.0.nupkg.sha512",
-    "C:\\Users\\kacpe\\.nuget\\packages\\sfml.graphics\\2.5.0\\sfml.graphics.2.5.0.nupkg.sha512",
-    "C:\\Users\\kacpe\\.nuget\\packages\\sfml.net\\2.5.0\\sfml.net.2.5.0.nupkg.sha512",
-    "C:\\Users\\kacpe\\.nuget\\packages\\sfml.system\\2.5.0\\sfml.system.2.5.0.nupkg.sha512",
-    "C:\\Users\\kacpe\\.nuget\\packages\\sfml.window\\2.5.0\\sfml.window.2.5.0.nupkg.sha512",
-    "C:\\Users\\kacpe\\.nuget\\packages\\wpfmath\\0.11.0\\wpfmath.0.11.0.nupkg.sha512"
+    "C:\\Users\\daved\\.nuget\\packages\\csfml\\2.5.0\\csfml.2.5.0.nupkg.sha512",
+    "C:\\Users\\daved\\.nuget\\packages\\mathnet.numerics\\4.15.0\\mathnet.numerics.4.15.0.nupkg.sha512",
+    "C:\\Users\\daved\\.nuget\\packages\\sfml.audio\\2.5.0\\sfml.audio.2.5.0.nupkg.sha512",
+    "C:\\Users\\daved\\.nuget\\packages\\sfml.graphics\\2.5.0\\sfml.graphics.2.5.0.nupkg.sha512",
+    "C:\\Users\\daved\\.nuget\\packages\\sfml.net\\2.5.0\\sfml.net.2.5.0.nupkg.sha512",
+    "C:\\Users\\daved\\.nuget\\packages\\sfml.system\\2.5.0\\sfml.system.2.5.0.nupkg.sha512",
+    "C:\\Users\\daved\\.nuget\\packages\\sfml.window\\2.5.0\\sfml.window.2.5.0.nupkg.sha512",
+    "C:\\Users\\daved\\.nuget\\packages\\wpfmath\\0.11.0\\wpfmath.0.11.0.nupkg.sha512",
+    "C:\\Users\\daved\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\3.1.21\\microsoft.netcore.app.host.win-x64.3.1.21.nupkg.sha512",
+    "C:\\Users\\daved\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\3.1.10\\microsoft.aspnetcore.app.ref.3.1.10.nupkg.sha512",
+    "C:\\Users\\daved\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\3.1.0\\microsoft.windowsdesktop.app.ref.3.1.0.nupkg.sha512",
+    "C:\\Users\\daved\\.nuget\\packages\\microsoft.netcore.app.ref\\3.1.0\\microsoft.netcore.app.ref.3.1.0.nupkg.sha512"
   ],
   "logs": []
 }

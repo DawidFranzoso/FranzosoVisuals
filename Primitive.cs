@@ -13,12 +13,26 @@ namespace FranzosoVisuals
 
         public void scalePosition<T>(ref T t, Matrix2X2F m) where T : Transformable { t.Position = t.Position.X * m.span.Item1.get() + t.Position.Y * m.span.Item2.get(); }
         public void scalePosition(ref Vertex t, Matrix2X2F m) { t.Position = t.Position.X * m.span.Item1.get() + t.Position.Y * m.span.Item2.get(); }
-
-        public Shape convSFML_S(Shape d, FVWindow w, Vec2f offset, Matrix2X2F pos_scale)
+        // for now here,move to some better place later
+        public VertexArray getTransformedVertexArray(VertexArray v_array, Vector2f offset, Matrix2X2F pos_scale) // returns a copy, not reference
         {
-            scalePosition(ref d, pos_scale); //scale
-            addPosition(ref d, offset);  // add offset
+            VertexArray v_array_transformed = new VertexArray(v_array.PrimitiveType);
 
+            for (uint i = 0; i < v_array.VertexCount; i++)
+            {
+                Vertex v_transformed = v_array[i];
+
+                scalePosition(ref v_transformed, pos_scale);
+                addPosition(ref v_transformed, offset);
+
+                v_array_transformed.Append(v_transformed);
+            }
+
+            return v_array_transformed;
+        }
+
+        public Shape convSFML_S(Shape d, FVWindow w)
+        {
             // flip
             scalePosition(ref d, new Matrix2X2F((1,0),(0,-1)));
             addPosition(ref d, new Vec2f(0, w.window.Size.Y));
@@ -29,7 +43,7 @@ namespace FranzosoVisuals
             return d;
         }
 
-        public VertexArray convSFML_V(VertexArray v, FVWindow w, Vector2f offset, Matrix2X2F pos_scale)
+        public VertexArray convSFML_V(VertexArray v, FVWindow w)
         {
             VertexArray v_transformed = new VertexArray(v);
             v_transformed.Clear();
@@ -37,9 +51,6 @@ namespace FranzosoVisuals
             for (uint i = 0; i < v.VertexCount; i++)
             {
                 Vertex v_single = v[i];
-
-                scalePosition(ref v_single, pos_scale); // scale
-                addPosition(ref v_single, offset);  // add offset
 
                 // flip
                 scalePosition(ref v_single, new Matrix2X2F((1, 0), (0, -1)));
@@ -52,12 +63,12 @@ namespace FranzosoVisuals
             return v_transformed;
         }
 
-        public Sprite convSFML_SPR(Sprite s, FVWindow w, Vec2f offset, Matrix2X2F pos_scale)
+        public Sprite convSFML_SPR(Sprite s, FVWindow w, Vector2f offset, Matrix2X2F pos_scale)
         {
             Sprite temp = new Sprite(s);
 
-            scalePosition(ref temp, pos_scale); // scale
-            addPosition(ref temp, offset);  // add offset
+            scalePosition(ref temp, pos_scale);
+            addPosition(ref temp, offset);
 
             // flip
             scalePosition(ref temp, new Matrix2X2F((1, 0), (0, -1)));

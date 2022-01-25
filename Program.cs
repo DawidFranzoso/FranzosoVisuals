@@ -99,7 +99,7 @@ namespace FranzosoVisuals
             FuncA<IValue<Func<decimal, decimal>>, Func<decimal, decimal>> lower_circle = new FuncA<IValue<Func<decimal, decimal>>, Func<decimal, decimal>>(f => (x => -f.get()(x)), upper_circle);
 
             Grid base_grid = new Grid(base_system, new Rf<Vec2f>((200, 200)), new Rf<bool>(true));
-            Grid inner_grid = new Grid(new Matrix2X2F(1,0,0,1), new Rf<Vec2f>((0,0)), new Rf<bool>(false));
+            Grid inner_grid = new Grid(new Matrix2X2F(2,0,0,2), new Rf<Vec2f>((0,0)), new Rf<bool>(false));
             inner_grid.Graph(lower_circle, new Rf<decimal>(0.01M), new Rf<(decimal, decimal)>((-3M, 3M)));
             inner_grid.Graph(upper_circle, new Rf<decimal>(0.01M), new Rf<(decimal, decimal)>((-3M, 3M)));
             base_grid.Graph(inner_grid);
